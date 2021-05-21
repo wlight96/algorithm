@@ -1,35 +1,41 @@
 #include<bits/stdc++.h>
 using namespace std;
 string star;
-int starnum = -1;
+int startsize = -1;
+int endsize = -1;
 string fname;
 int num;
 int main(){
     cin >> num;
     cin >> star;
+    string rstar(star);
+    reverse(rstar.begin(),rstar.end());
     for(int i=0; i<star.length(); i++){
         if(star[i]=='*'){
-            starnum = i;
-            break;
+            startsize = i;
+        }else if(rstar[i] =='*'){
+            endsize = i;
         }
     }
+
     int dane[num];
     for(int i=0; i<num; i++){
         cin >> fname;
-        // * 이 0 번째, i번째, n-1번째일 경우를 나누어 생각한다. 
-        for(int j=0; j< starnum; j++){
+        dane[i] = 0;
+        for(int j=0; j< startsize; j++){
             if(fname[j] != star[j]){
                 dane[i] = 1;
-                cout << "f: "<< fname[j] << "s: "<< star[j]<<"\n";
-                break;
-            }
-        }for(int j= star.length()-starnum; j<star.length(); j++){
-            if(fname[(fname.length()-star.length())+j] != star[j]){
-                dane[i] = 1;
-                cout << "lf: "<< fname[(fname.length()-star.length())+j] << "ls: "<< star[j]<<"\n"; 
                 break;
             }
         }
+        reverse(fname.begin(), fname.end());
+        for(int j = 0; j< endsize; j++){
+            if(fname[j] != rstar[j]){
+                dane[i] = 1;
+                break;
+            }
+        }
+
     }
     for(int i=0; i<num; i++){
         if(dane[i]!=0){
